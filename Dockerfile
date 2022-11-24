@@ -1,7 +1,7 @@
 FROM python:3.9-alpine3.13
 LABEL maintainer="maxdevpro.com"
 
-ENV PYTHONBUFFERED 1
+ENV PYTHONUBUFFERED 1
 
 COPY ./requirements.txt /tmp/requirements.txt
 COPY ./app /app
@@ -15,7 +15,7 @@ RUN python -m venv /py && \
     adduser \
         --disabled-password \
         --no-create-home \
-        dajngo-user
+        django-user
 
 ENV PATH="/py/bin:$PATH"
 
