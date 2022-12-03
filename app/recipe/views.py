@@ -1,5 +1,5 @@
 """
-Views for the recipe APIs.
+Views for the recipe APIs
 """
 from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
@@ -17,7 +17,5 @@ class RecipeViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        """Retrieve recipes for authenticated users."""
+        """Retrieve recipes for authenticated user."""
         return self.queryset.filter(user=self.request.user).order_by('-id')
-
-    
