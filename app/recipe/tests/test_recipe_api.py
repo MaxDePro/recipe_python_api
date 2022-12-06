@@ -20,6 +20,7 @@ from recipe.serializers import (
 
 RECIPE_URLS = reverse('recipe:recipe-list')
 
+
 def detail_url(recipe_id):
     """Create and return a recipe detail URL."""
     return reverse('recipe:recipe-detail', args=[recipe_id])
@@ -42,7 +43,7 @@ def create_recipe(user, **params):
 
 def create_user(**params):
     """Create and return new user."""
-    return get_user_model().objects.create_user(params)
+    return get_user_model().objects.create_user(**params)
 
 
 class PublicRecipeAPITests(TestCase):
@@ -80,7 +81,7 @@ class PrivateRepiceAPITests(TestCase):
 
     def test_recipe_list_limited_to_user(self):
         """Test list of recipes is limited to authenticated user."""
-        other_user = create_user(email='other@example.com', password='password123')
+        other_user = create_user(email='other@example.com', password='test123')
         create_recipe(user=other_user)
         create_recipe(user=self.user)
 
@@ -108,7 +109,6 @@ class PrivateRepiceAPITests(TestCase):
             'time_minutes': 30,
             'price': Decimal('5.99')
         }
-
         res = self.client.post(RECIPE_URLS, payload)
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
@@ -137,17 +137,17 @@ class PrivateRepiceAPITests(TestCase):
         self.assertEqual(recipe.user, self.user)
 
     def test_full_update(self):
-        """Test full update recipe."""
+        """Test full update of recipe."""
         recipe = create_recipe(
             user=self.user,
             title='Sample recipe title',
-            link='http://example.com/recipe.pdf',
-            description='Sample description'
+            link='https://example.com/recipe.pdf',
+            description='Sample description',
         )
 
         payload = {
             'title': 'New recipe title',
-            'link': 'http://example.com/new-recipe.pdf',
+            'link': 'https://example.com/new-recipe.pdf',
             'description': 'New recipe description',
             'time_minutes': 10,
             'price': Decimal('2.50'),
@@ -183,8 +183,8 @@ class PrivateRepiceAPITests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
         self.assertFalse(Recipe.objects.filter(id=recipe.id).exists())
 
-    def test_recipe_other_users_error(self):
-        """Test trying to delete anothe users recipe gives error."""
+    def test_recipe_other_users_recipe_error(self):
+        """Test trying to delete another users recipe gives error."""
         new_user = create_user(email='user2@example.com', password='test123')
         recipe = create_recipe(user=new_user)
 
@@ -193,4 +193,3 @@ class PrivateRepiceAPITests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
         self.assertTrue(Recipe.objects.filter(id=recipe.id).exists())
-        
