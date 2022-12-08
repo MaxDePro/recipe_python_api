@@ -205,7 +205,6 @@ class PrivateRepiceAPITests(TestCase):
             'price': Decimal('2.50'),
             'tags': [{'name': 'Thai'}, {'name': 'Dinner'}]
         }
-
         res = self.client.post(RECIPE_URLS, payload, format='json')
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
@@ -216,8 +215,8 @@ class PrivateRepiceAPITests(TestCase):
         for tag in payload['tags']:
             exists = recipe.tags.filter(
                 name=tag['name'],
-                user = self.user
-            )
+                user=self.user
+            ).exists()
             self.assertTrue(exists)
 
     def test_create_recipe_with_existing_tags(self):
@@ -253,7 +252,7 @@ class PrivateRepiceAPITests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         new_tag = Tag.objects.get(user=self.user, name='Lunch')
-        self.assertEqual(new_tag, recipe.tags.all())
+        self.assertIn(new_tag, recipe.tags.all())
 
     def test_update_recipe_assign_tag(self):
         """Test assigning an existing tag when updating a recipe."""
