@@ -29,12 +29,13 @@ from recipe.serializers import (
 RECIPE_URLS = reverse('recipe:recipe-list')
 
 
-def image_upload_url(recipe_id):
-    """Create and return an image upload URL."""
-    return reverse('recipe:recipe-detail', args=[recipe_id])
-
 def detail_url(recipe_id):
     """Create and return a recipe detail URL."""
+    return reverse('recipe:recipe-detail', args=[recipe_id])
+
+
+def image_upload_url(recipe_id):
+    """Create and return an image upload URL."""
     return reverse('recipe:recipe-detail', args=[recipe_id])
 
 

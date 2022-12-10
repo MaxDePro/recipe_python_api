@@ -17,7 +17,7 @@ TAGS_URL = reverse('recipe:tag-list')
 
 
 def detail_url(tag_id):
-    """Create and return a tag detail url"""
+    """Create and return a tag detail url."""
     return reverse('recipe:tag-detail', args=[tag_id])
 
 
@@ -27,7 +27,7 @@ def create_user(email='user@example.com', password='testpass123'):
 
 
 class PublicTagsApiTests(TestCase):
-    """Test unauthenticated API request."""
+    """Test unauthenticated API requests."""
 
     def setUp(self):
         self.client = APIClient()
@@ -48,7 +48,7 @@ class PrivateTagsApiTests(TestCase):
         self.client.force_authenticate(self.user)
 
     def test_retrieve_tags(self):
-        """Test retrievint a list of tags."""
+        """Test retrieving a list of tags."""
         Tag.objects.create(user=self.user, name='Vegan')
         Tag.objects.create(user=self.user, name='Dessert')
 
@@ -86,7 +86,7 @@ class PrivateTagsApiTests(TestCase):
 
     def test_delete_tag(self):
         """Test deleting a tag."""
-        tag = Tag.objects.create(user=self.user, name='After Dinner')
+        tag = Tag.objects.create(user=self.user, name='Breakfast')
 
         url = detail_url(tag.id)
         res = self.client.delete(url)
