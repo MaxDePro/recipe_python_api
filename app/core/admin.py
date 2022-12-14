@@ -1,5 +1,5 @@
 """
-Django admin costumization
+Django admin customization
 """
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
@@ -39,9 +39,9 @@ class UserAdmin(BaseUserAdmin):
                 'is_active',
                 'is_staff',
                 'is_superuser',
-                ),
-            }),
-        )
+            ),
+        }),
+    )
 
 
 admin.site.register(models.User, UserAdmin)
