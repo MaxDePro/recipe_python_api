@@ -1,5 +1,5 @@
 """
-Django admin customization
+Django admin customization.
 """
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
@@ -16,7 +16,7 @@ class UserAdmin(BaseUserAdmin):
         (None, {'fields': ('email', 'password')}),
         (_('Personal Info'), {'fields': ('name',)}),
         (
-            _('Permisions'),
+            _('Permissions'),
             {
                 'fields': (
                     'is_active',
